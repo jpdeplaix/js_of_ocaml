@@ -32,27 +32,29 @@ let split_primitives p =
   in
   Array.of_list (split 0 0)
 
+
+let new_directive name k =
+     Hashtbl.add
+       Toploop.directive_table
+       name k
+[@@alert "-deprecated"]
+  
 let setup =
   lazy
     (Topdirs.dir_directory "/static/cmis";
-     Hashtbl.add
-       Toploop.directive_table
+     new_directive
        "enable"
        (Toploop.Directive_string Config.Flag.enable);
-     Hashtbl.add
-       Toploop.directive_table
+     new_directive
        "disable"
        (Toploop.Directive_string Config.Flag.disable);
-     Hashtbl.add
-       Toploop.directive_table
+     new_directive
        "debug_on"
        (Toploop.Directive_string Debug.enable);
-     Hashtbl.add
-       Toploop.directive_table
+     new_directive
        "debug_off"
        (Toploop.Directive_string Debug.disable);
-     Hashtbl.add
-       Toploop.directive_table
+     new_directive
        "tailcall"
        (Toploop.Directive_string (Config.Param.set "tc"));
      let initial_primitive_count =
